@@ -63,7 +63,11 @@ class ViewController: UIViewController {
             } else {
                 if let user = user {
                     self.user = user
-                    print("user logged in \(user)")
+                    self.performSegue(withIdentifier: "chatSegue", sender: self)
+//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+//                    self.present(vc, animated: true, completion: {
+//                        print("user logged in \(user)")
+//                    })
                 }
             }
         }
