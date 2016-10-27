@@ -12,8 +12,18 @@ import Parse
 class ChatViewController: UIViewController {
 
     @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet weak var messageTableView: UITableView!
+    
+    var messages: NSArray = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.messageTableView.dataSource = self
+        self.messageTableView.estimatedRowHeight = 100
+        self.messageTableView.rowHeight = UITableViewAutomaticDimension
+        
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ChatViewController.onTimer), userInfo: nil, repeats: true)
+
 
         // Do any additional setup after loading the view.
     }
@@ -25,6 +35,33 @@ class ChatViewController: UIViewController {
     
     @IBAction func sendPressed(_ sender: AnyObject) {
         sendMessage()
+    }
+    
+    func onTimer() {
+        // Add code to be run periodically
+        queryMessages()
+    }
+    
+    func queryMessages() {
+        let query = PFQuery(className:"Message")
+        query.order(byDescending: "createdAt")
+        query.findObjectsInBackground {
+            (objects: [PFObject]?, error: Error?) -> Void in
+            
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) scores.")
+                // Do something with the found objects
+                if let objects = objects {
+                    self.messages = objects as NSArray
+                }
+                self.messageTableView.reloadData()
+            } else {
+                // Log details of the failure
+                print("Error: \(error!) \(error!.localizedDescription)")
+            }
+        }
+
     }
     
     func sendMessage() {
@@ -51,4 +88,21 @@ class ChatViewController: UIViewController {
     }
     */
 
+}
+
+extension ChatViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
+        let messageObj = self.messages[indexPath.row] as! PFObject
+        if let text = messageObj["text"] {
+            cell.messageLabel.text = text as! String
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
 }

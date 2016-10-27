@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -81,26 +82,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xGI-4x-0lA">
-                                <frame key="frameInset" minX="16" minY="219" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xGI-4x-0lA">
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eBj-dd-peC">
-                                <frame key="frameInset" minX="137" minY="318" width="101" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eBj-dd-peC">
                                 <state key="normal" title="Send Message"/>
                                 <connections>
                                     <action selector="sendPressed:" destination="uUZ-Gd-ziD" eventType="touchUpInside" id="DCy-TI-nGy"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-HX-Hax">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageTableViewCell" id="MX5-qa-eLa" customClass="MessageTableViewCell" customModule="ChatWithParse" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MX5-qa-eLa" id="4o3-XA-SOU">
+                                            <frame key="frameInset" width="343" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nv-LQ-pGd">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1Nv-LQ-pGd" firstAttribute="leading" secondItem="4o3-XA-SOU" secondAttribute="leadingMargin" constant="4" id="qqR-La-9zq"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1Nv-LQ-pGd" secondAttribute="trailing" constant="4" id="ugn-82-52x"/>
+                                                <constraint firstItem="1Nv-LQ-pGd" firstAttribute="centerY" secondItem="4o3-XA-SOU" secondAttribute="centerY" id="y4V-At-NWw"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="messageLabel" destination="1Nv-LQ-pGd" id="DiO-8j-Hm5"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WiW-HX-Hax" firstAttribute="top" secondItem="eBj-dd-peC" secondAttribute="bottom" constant="8" id="6HI-TG-y1O"/>
+                            <constraint firstItem="xGI-4x-0lA" firstAttribute="top" secondItem="euf-7b-Elv" secondAttribute="bottom" constant="8" id="CHR-QS-d1r"/>
+                            <constraint firstItem="eBj-dd-peC" firstAttribute="top" secondItem="xGI-4x-0lA" secondAttribute="bottom" constant="4" id="Kzh-Bd-sLh"/>
+                            <constraint firstItem="xGI-4x-0lA" firstAttribute="leading" secondItem="qBd-wY-7VW" secondAttribute="leadingMargin" constant="8" id="h9W-DI-yC5"/>
+                            <constraint firstItem="WiW-HX-Hax" firstAttribute="leading" secondItem="qBd-wY-7VW" secondAttribute="leadingMargin" id="s0v-2J-d1l"/>
+                            <constraint firstItem="e3o-Uo-PnZ" firstAttribute="top" secondItem="WiW-HX-Hax" secondAttribute="bottom" id="vni-Ew-Y3v"/>
+                            <constraint firstItem="eBj-dd-peC" firstAttribute="centerX" secondItem="qBd-wY-7VW" secondAttribute="centerX" id="wIO-ZW-M63"/>
+                            <constraint firstItem="xGI-4x-0lA" firstAttribute="trailing" secondItem="qBd-wY-7VW" secondAttribute="trailingMargin" constant="8" id="wcT-vr-UZS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WiW-HX-Hax" secondAttribute="trailing" id="wz9-5d-ALc"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="GUh-9R-CrP"/>
                     <connections>
+                        <outlet property="messageTableView" destination="WiW-HX-Hax" id="OJO-gJ-4Ds"/>
                         <outlet property="messageTextField" destination="xGI-4x-0lA" id="9QV-Zw-QaG"/>
                     </connections>
                 </viewController>
