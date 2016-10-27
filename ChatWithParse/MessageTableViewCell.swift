@@ -11,6 +11,8 @@ import UIKit
 class MessageTableViewCell: UITableViewCell {
 
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var messageStackView: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

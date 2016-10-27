@@ -45,6 +45,7 @@ class ChatViewController: UIViewController {
     func queryMessages() {
         let query = PFQuery(className:"Message")
         query.order(byDescending: "createdAt")
+        query.includeKey("user")
         query.findObjectsInBackground {
             (objects: [PFObject]?, error: Error?) -> Void in
             
@@ -67,6 +68,7 @@ class ChatViewController: UIViewController {
     func sendMessage() {
         let message = PFObject(className: "Message")
         message["text"] = messageTextField.text!
+        message["user"] = PFUser.current() 
         message.saveInBackground {
         (success: Bool, error: Error?) -> Void in
             if (success) {
@@ -95,9 +97,18 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
         let messageObj = self.messages[indexPath.row] as! PFObject
+        let usernameView = cell.messageStackView.arrangedSubviews[0]
         if let text = messageObj["text"] {
             cell.messageLabel.text = text as! String
         }
+        if let user = messageObj["user"] {
+            let userObj = user as! PFUser
+            usernameView.isHidden = false
+            cell.usernameLabel.text = userObj.username
+        } else {
+            usernameView.isHidden = true
+        }
+        
         return cell
     }
     
